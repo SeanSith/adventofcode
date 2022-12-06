@@ -14,12 +14,24 @@ input.each do |line|
     line.delete_at(i)
   end
   (line.length..1).step(-2).to_a.each { line.delete_at(_1) }
-  line.unshift('-')
   stacks << line
 end
 
 stacks = stacks.transpose.map do |line|
-  line.map { _1 if _1.match(/[A-Z]/) }
+  line.map { _1 if _1.match(/[A-Z]/) }.compact
+end
+
+input.each do |line|
+  next unless line.match(/^move/)
+
+  line_regex = /^move (\d+) from (\d+) to (\d+)/
+  quantity, source, destination = line.match(line_regex).captures
+  quantity.to_i.times do
+    whats_moving = stacks[source.to_i - 1].shift
+    stacks[destination.to_i - 1].unshift(whats_moving)
+  end
 end
 
 puts stacks.map(&:join)
+puts ''
+puts stacks.map(&:first).join

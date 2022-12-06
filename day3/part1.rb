@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative './rucksack.rb'
+require_relative './rucksack'
 
 inputs = File.readlines('input')
 

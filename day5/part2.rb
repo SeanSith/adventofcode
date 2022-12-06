@@ -10,10 +10,8 @@ input.each do |line|
 
   line_regex = /^move (\d+) from (\d+) to (\d+)/
   quantity, source, destination = line.match(line_regex).captures
-  quantity.to_i.times do
-    whats_moving = stacks[source.to_i - 1].shift
-    stacks[destination.to_i - 1].unshift(whats_moving)
-  end
+  whats_moving = stacks[source.to_i - 1].shift(quantity.to_i)
+  stacks[destination.to_i - 1].unshift(*whats_moving)
 end
 
 puts stacks.map(&:join)
